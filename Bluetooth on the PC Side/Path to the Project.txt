@@ -1,0 +1,1 @@
+C:\Users\Visualiser\Desktop\Wireless com summer placement\BLUETOOTH\Bluetooth 5\nRF5_SDK_13.0.0_04a0bfd\examples\ble_central\ble_app_uart_c\pca10056\s140\arm5_no_packs
