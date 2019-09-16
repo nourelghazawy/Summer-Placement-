@@ -1,0 +1,7 @@
+Encoder Microcontroller to the Arm
+The PIC is communicating to the arm using UART1 on the ARM, I used the receive line (PB6) and didn't need the transmit line.
+I used two pins to distinguish between the two encoder, PIN RA0 on the PIC to be connected to PB_12 on the ARM.
+PIN RB3 on the PIC to be connected to PB_2 on the Arm.
+The Left encoder is connected to Interrupt 0 which will need PCFGA4 bit in ADCON1 Register to be set otherwise the interrupt won't work. This is because the same pin is used for the ADC as well.
+If you want to supply the PIC from an external supply pin 11 (PGM) should be connected to ground. (This is done in the PCB) 
+

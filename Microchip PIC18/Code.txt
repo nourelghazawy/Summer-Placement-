@@ -1,0 +1,82 @@
+#include  "p18f1220.h"
+#include "plib/timers.h"
+#include "usart.h"
+volatile unsigned char flag=0;
+void ConfigureUsart(void);
+void ConfigureTimer0(void);
+volatile char Left_Encoder = 0;
+volatile char Right_Encoder = 0;
+volatile int x=0;
+volatile int Left_Byte=0;
+volatile int Right_Byte=0;
+void main (void)
+{
+    INTCONbits.GIE=1;               //Enable Global Interrupts
+    INTCONbits.PEIE=1;              //Enable Periphiral Interrupts
+    TRISBbits.RB3 = 0;              //Configuring RB3 to be Output
+
+    INTCON3bits.INT2IE=1;           //Enable Interrupt 2 
+    ADCON1bits.PCFG4=1;             //This has to be done to enable interrupt 2
+        
+    OSCCONbits.IRCF0=1;             //configured to increase the frequency of the oscillator
+    OSCCONbits.IRCF1=1;             //configured to increase the frequency of the oscillator
+    OSCCONbits.IRCF2=1;             //configured to increase the frequency of the oscillator
+    
+    ConfigureTimer0();
+    ConfigureUsart();
+    while (1)
+    {
+
+    }
+}
+void ConfigureUsart(void)
+{
+    OpenUSART(USART_TX_INT_OFF &
+              USART_RX_INT_OFF &
+              USART_ASYNCH_MODE &
+              USART_EIGHT_BIT &
+              USART_CONT_RX &
+              USART_BRGH_LOW,
+              12    );                      //Configuring Usart For Baud Rate of 9600
+    
+}
+void ConfigureTimer0(void)
+{
+    OpenTimer0( TIMER_INT_OFF & T0_16BIT & T0_SOURCE_INT & T0_PS_1_32);
+    WriteTimer0(0);
+
+    INTCONbits.TMR0IE = 0;  //Disabling Timer 0 Interrupt                                           
+}
+
+
+void interrupt isr (void)
+{
+    if (INTCON3bits.INT2IF)
+    {
+        INTCON3bits.INT2IF=0;           //Clearing Interrupt flag
+        Right_Encoder++;                //Incrementing the encoder for each tick
+        if (Right_Encoder==12)
+        {
+            LATBbits.LATB3=1;      
+            x= ReadTimer0();                //Reading Timer 0 counter
+            Left_Byte=(x&0xFF00)>>8;        // Saving the Most significant byte in a variable 
+            Right_Byte=x&0xFF;              // Saving the Least significant byte in a variable 
+            WriteUSART(250);                //Transmitting address
+            while (BusyUSART());  
+            WriteUSART(Left_Byte);          //Transmitting Most Significant byte
+            while (BusyUSART());  
+            WriteUSART(251);                //Transmitting address
+            while (BusyUSART());
+            WriteUSART(Right_Byte);         //Transmitting Least significant Byte
+            while (BusyUSART());
+            Right_Encoder=0;                //Resetting Encoder Counter
+            WriteTimer0(0);                 //Resetting Timer 0
+            LATBbits.LATB3=0;    
+        }
+ 
+       
+        
+    }
+       
+
+}
