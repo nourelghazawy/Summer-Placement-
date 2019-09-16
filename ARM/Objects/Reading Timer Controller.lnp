@@ -1,0 +1,10 @@
+--cpu=Cortex-M4.fp
+".\objects\stm32f4xx_it.o"
+".\objects\stm32f4xx_ll_utils.o"
+".\objects\system_stm32f4xx.o"
+".\objects\startup_stm32f401xe.o"
+".\objects\main.o"
+--strict --scatter ".\Objects\Reading Timer Controller.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\Reading Timer Controller.map" -o ".\Objects\Reading Timer Controller.axf"
