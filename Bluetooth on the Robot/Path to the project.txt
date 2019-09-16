@@ -1,0 +1,1 @@
+C:\Users\Visualiser\Desktop\Wireless com summer placement\BLUETOOTH\Bluetooth 5\nRF5_SDK_13.0.0_04a0bfd\examples\ble_peripheral\ble_app_uart\pca10056\s140\NRF DK
