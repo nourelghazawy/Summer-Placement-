@@ -13,4 +13,4 @@ To be able to see the behaviour of the servo motor controller, the encoder data 
 
 The robot had 3 Microcontrollers. STM32, NRF52840 and PIC18. To communicate with the robot over Bluetooth. you can either use an additional NRF52840 board on the PC side or you can use a mobile app. During tuning the PID constants I used another NRF52840 so that I can display the data on LabVIEW in Real-Time. 
 
-To control the robot without following the line, I used the nRF Toolbox app since you can add an instruction for every button added as shown in the figure below. 
+To control the robot without following the line, I used the nRF Toolbox app since you can add an instruction for every button added as shown in the nRF Toolbox app.png image uploaded. 
