@@ -1,4 +1,4 @@
-# Summer-Placement-
+# Summer-Placement
 Wireless Communication Implementation on a Line Following Robot
 
 ## System Overview
